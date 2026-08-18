@@ -5,7 +5,7 @@ const A = "/__l5e/assets-v1";
 
 export type Clip = { id: string; video: string; poster: string; label: string; category: string };
 
-export const clips: Record<string, Clip> = {
+export const clips = {
   ghatWalk: {
     id: "ghatWalk",
     video: `${A}/324f8252-aeb8-45e6-b8de-cf900e60b30d/ghat-walk.mp4`,
@@ -69,7 +69,7 @@ export const clips: Record<string, Clip> = {
     label: "जल में आस्था",
     category: "yaadein",
   },
-};
+} satisfies Record<string, Clip>;
 
 export const clipList: Clip[] = Object.values(clips);
 
@@ -106,7 +106,7 @@ export const stages: Stage[] = [
     date: ist("2026-11-13T07:00:00"),
     dateLabel: "13 नवम्बर 2026",
     desc: "स्नान, शुद्धता और व्रत की शुरुआत। कद्दू-भात का पहला प्रसाद।",
-    clip: clips.ghatWalk!,
+    clip: clips.ghatWalk,
   },
   {
     id: "kharna",
@@ -115,7 +115,7 @@ export const stages: Stage[] = [
     date: ist("2026-11-14T18:00:00"),
     dateLabel: "14 नवम्बर 2026",
     desc: "दिनभर का निर्जला उपवास, शाम को गुड़ की खीर और रोटी।",
-    clip: clips.prasad!,
+    clip: clips.prasad,
   },
   {
     id: "sandhya",
@@ -124,7 +124,7 @@ export const stages: Stage[] = [
     date: ist("2026-11-15T17:05:00"),
     dateLabel: "15 नवम्बर 2026",
     desc: "डूबते सूरज को पहला अर्घ्य। रफीगंज का घाट भर जाता है।",
-    clip: clips.droneGhat!,
+    clip: clips.droneGhat,
   },
   {
     id: "pratah",
@@ -133,7 +133,7 @@ export const stages: Stage[] = [
     date: ist("2026-11-16T06:05:00"),
     dateLabel: "16 नवम्बर 2026",
     desc: "उगते सूरज को अर्घ्य — उषा अर्घ्य, महापर्व का शिखर।",
-    clip: clips.sunriseTemple!,
+    clip: clips.sunriseTemple,
   },
   {
     id: "paran",
@@ -142,50 +142,50 @@ export const stages: Stage[] = [
     date: ist("2026-11-16T08:30:00"),
     dateLabel: "16 नवम्बर 2026",
     desc: "36 घंटे का व्रत पूरा। प्रसाद ग्रहण और छठी मैया का आशीर्वाद।",
-    clip: clips.waterCrowd!,
+    clip: clips.waterCrowd,
   },
 ];
 
 export const story = [
   {
     n: "01",
-    clip: clips.droneGhat!,
+    clip: clips.droneGhat,
     title: "ये सिर्फ घाट नहीं…",
     sub: "यहाँ हर साल पूरा रफीगंज एक साथ खड़ा होता है।",
   },
   {
     n: "02",
-    clip: clips.prasad!,
+    clip: clips.prasad,
     title: "हर तैयारी में एक विश्वास…",
     sub: "ठेकुआ, गन्ना, फल — सब कुछ मन से।",
   },
   {
     n: "03",
-    clip: clips.devotee!,
+    clip: clips.devotee,
     title: "हर चेहरे पर एक प्रार्थना…",
     sub: "व्रती माँओं का 36 घंटे का संकल्प।",
   },
   {
     n: "04",
-    clip: clips.arghyaThali!,
+    clip: clips.arghyaThali,
     title: "हर डूबते सूरज को एक प्रणाम…",
     sub: "संध्या अर्घ्य — जल में उतरती आस्था।",
   },
   {
     n: "05",
-    clip: clips.droneWater!,
+    clip: clips.droneWater,
     title: "रात भी यहाँ रोशनी से भर जाती है…",
     sub: "दीये, सजावट और पानी में काँपती परछाइयाँ।",
   },
   {
     n: "06",
-    clip: clips.sunriseTemple!,
+    clip: clips.sunriseTemple,
     title: "और उगते सूरज के साथ…",
     sub: "प्रातः अर्घ्य — पूरा घाट एक स्वर में।",
   },
   {
     n: "07",
-    clip: clips.waterCrowd!,
+    clip: clips.waterCrowd,
     title: "एक नई उम्मीद जन्म लेती है। ❤️",
     sub: "जय छठी मैया 🙏",
   },
