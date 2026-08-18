@@ -1,100 +1,133 @@
 import { useEffect, useRef, useState } from "react";
-import { musicCategories } from "@/data/rafiganj";
+import { musicCategories, tracks, type Track } from "@/data/rafiganj";
 
-type Track = { name: string; artist: string; url: string; cat: string };
+declare global {
+  interface Window {
+    YT?: any;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
 
-/**
- * Floating player. No copyrighted audio is bundled — the visitor adds their own
- * (or royalty-free) tracks, which stay local to the device/session.
- */
+let apiPromise: Promise<any> | null = null;
+function loadYT(): Promise<any> {
+  if (apiPromise) return apiPromise;
+  apiPromise = new Promise((resolve) => {
+    if (window.YT?.Player) return resolve(window.YT);
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      prev?.();
+      resolve(window.YT);
+    };
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(s);
+  });
+  return apiPromise;
+}
+
+/** Floating player. Audio streams live from YouTube — nothing is bundled or re-hosted. */
 export function MusicPlayer() {
-  const audio = useRef<HTMLAudioElement>(null);
-  const [tracks, setTracks] = useState<Track[]>([]);
+  const host = useRef<HTMLDivElement>(null);
+  const player = useRef<any>(null);
+  const [ready, setReady] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [cat, setCat] = useState("maiya");
+  const [cat, setCat] = useState("classics");
   const [open, setOpen] = useState(false);
-  const current = tracks[idx];
+  const current: Track | undefined = tracks[idx];
 
   useEffect(() => {
-    const el = audio.current;
-    if (!el || !current) return;
-    el.src = current.url;
-    if (playing) void el.play().catch(() => setPlaying(false));
-  }, [idx, current?.url]);
+    let cancelled = false;
+    void loadYT().then((YT) => {
+      if (cancelled || !host.current || player.current) return;
+      player.current = new YT.Player(host.current, {
+        height: "1",
+        width: "1",
+        videoId: tracks[0]!.id,
+        playerVars: { playsinline: 1, controls: 0, origin: window.location.origin },
+        events: {
+          onReady: () => setReady(true),
+          onStateChange: (e: any) => {
+            setPlaying(e.data === YT.PlayerState.PLAYING);
+            if (e.data === YT.PlayerState.ENDED) setIdx((p) => (p + 1) % tracks.length);
+          },
+        },
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // load new track when index changes
+  const first = useRef(true);
+  useEffect(() => {
+    if (!ready || !player.current) return;
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    player.current.loadVideoById(tracks[idx]!.id);
+  }, [idx, ready]);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      const p = player.current;
+      if (!p?.getDuration) return;
+      const d = p.getDuration();
+      setProgress(d ? (p.getCurrentTime() / d) * 100 : 0);
+    }, 500);
+    return () => clearInterval(t);
+  }, []);
 
   const toggle = () => {
-    const el = audio.current;
-    if (!el || !current) return;
-    if (playing) {
-      el.pause();
-      setPlaying(false);
-    } else {
-      void el.play().then(() => setPlaying(true)).catch(() => {});
-    }
+    const p = player.current;
+    if (!p) return;
+    if (playing) p.pauseVideo();
+    else p.playVideo();
   };
 
-  const step = (d: number) => {
-    if (!tracks.length) return;
-    setIdx((p) => (p + d + tracks.length) % tracks.length);
-  };
-
-  const onFiles = (files: FileList | null) => {
-    if (!files) return;
-    const added: Track[] = Array.from(files).map((f) => ({
-      name: f.name.replace(/\.[^.]+$/, ""),
-      artist: "आपका संगीत",
-      url: URL.createObjectURL(f),
-      cat,
-    }));
-    setTracks((t) => [...t, ...added]);
-  };
-
+  const step = (d: number) => setIdx((p) => (p + d + tracks.length) % tracks.length);
   const list = tracks.filter((t) => t.cat === cat);
 
   return (
     <>
-      <audio
-        ref={audio}
-        onTimeUpdate={(e) => {
-          const el = e.currentTarget;
-          setProgress(el.duration ? (el.currentTime / el.duration) * 100 : 0);
-        }}
-        onEnded={() => step(1)}
-      />
+      <div className="pointer-events-none fixed -left-[9999px] top-0 h-px w-px overflow-hidden">
+        <div ref={host} />
+      </div>
 
-      <div className="fixed inset-x-3 bottom-[92px] z-40">
-        <div className="glass mx-auto max-w-xl rounded-3xl px-3 py-2.5">
+      <div className="fixed inset-x-3 bottom-[86px] z-40">
+        <div className="glass mx-auto max-w-xl rounded-2xl px-3 py-2.5">
           <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
             <button
               onClick={() => setOpen((o) => !o)}
-              aria-label="संगीत सूची"
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-sunset to-vermilion text-lg"
+              aria-label="Toggle playlist"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sunset to-vermilion text-sm font-semibold text-cream"
             >
-              🎵
+              {open ? "✕" : "♪"}
             </button>
             <div className="min-w-0">
-              <p className="truncate font-hindi text-sm text-cream">
-                {current ? current.name : "अपना भक्ति संगीत जोड़ें"}
+              <p className="truncate font-ui text-sm text-cream">{current?.title}</p>
+              <p className="truncate font-ui text-[11px] text-cream/50">
+                {current?.artist} · YouTube
               </p>
-              <p className="truncate text-[11px] text-cream/55">{current ? current.artist : "🎵 पर टैप करें"}</p>
-              <div className="mt-1.5 h-[3px] w-full overflow-hidden rounded-full bg-cream/15">
+              <div className="mt-1.5 h-[2px] w-full overflow-hidden rounded-full bg-cream/15">
                 <div className="h-full rounded-full bg-gold" style={{ width: `${progress}%` }} />
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-1">
-              <button onClick={() => step(-1)} aria-label="पिछला" className="h-10 w-8 text-cream/80">
+              <button onClick={() => step(-1)} aria-label="Previous" className="h-10 w-7 text-cream/70">
                 ⏮
               </button>
               <button
                 onClick={toggle}
-                aria-label={playing ? "रोकें" : "चलाएँ"}
-                className="grid h-11 w-11 place-items-center rounded-full bg-cream text-midnight"
+                aria-label={playing ? "Pause" : "Play"}
+                className="grid h-10 w-10 place-items-center rounded-full bg-cream text-sm text-midnight"
               >
                 {playing ? "❚❚" : "▶"}
               </button>
-              <button onClick={() => step(1)} aria-label="अगला" className="h-10 w-8 text-cream/80">
+              <button onClick={() => step(1)} aria-label="Next" className="h-10 w-7 text-cream/70">
                 ⏭
               </button>
             </div>
@@ -107,41 +140,31 @@ export function MusicPlayer() {
                   <button
                     key={c.id}
                     onClick={() => setCat(c.id)}
-                    className={`shrink-0 rounded-full px-3 py-1.5 font-hindi text-xs ${
-                      cat === c.id ? "bg-gold text-midnight" : "bg-cream/10 text-cream/80"
+                    className={`shrink-0 rounded-full px-3 py-1.5 font-ui text-xs tracking-wide ${
+                      cat === c.id ? "bg-gold text-midnight" : "bg-cream/10 text-cream/75"
                     }`}
                   >
-                    {c.icon} {c.label}
+                    {c.label}
                   </button>
                 ))}
               </div>
-              <div className="max-h-40 space-y-1 overflow-y-auto">
-                {list.length === 0 && (
-                  <p className="py-2 font-hindi text-xs text-cream/55">
-                    इस श्रेणी में अभी कोई गाना नहीं। नीचे से अपने डिवाइस का ऑडियो जोड़ें — कॉपीराइट गाने यहाँ नहीं
-                    दिए गए हैं।
-                  </p>
-                )}
-                {list.map((t) => (
-                  <button
-                    key={t.url}
-                    onClick={() => setIdx(tracks.indexOf(t))}
-                    className="block w-full truncate rounded-xl px-2 py-2 text-left font-hindi text-sm text-cream/85 hover:bg-cream/10"
-                  >
-                    ♪ {t.name}
-                  </button>
-                ))}
+              <div className="max-h-44 space-y-0.5 overflow-y-auto">
+                {list.map((t) => {
+                  const active = tracks[idx]?.id === t.id;
+                  return (
+                    <button
+                      key={t.id}
+                      onClick={() => setIdx(tracks.findIndex((x) => x.id === t.id))}
+                      className={`flex w-full items-center gap-2 rounded-xl px-2 py-2 text-left font-ui text-sm ${
+                        active ? "bg-cream/10 text-gold" : "text-cream/80"
+                      }`}
+                    >
+                      <span className="min-w-0 flex-1 truncate">{t.title}</span>
+                      <span className="shrink-0 text-[10px] text-cream/40">{t.artist}</span>
+                    </button>
+                  );
+                })}
               </div>
-              <label className="mt-2 block cursor-pointer rounded-xl border border-dashed border-gold/40 px-3 py-2 text-center font-hindi text-xs text-gold">
-                + संगीत जोड़ें
-                <input
-                  type="file"
-                  accept="audio/*"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => onFiles(e.target.files)}
-                />
-              </label>
             </div>
           )}
         </div>
