@@ -10,78 +10,76 @@ export const clips = {
     id: "ghatWalk",
     video: `${A}/324f8252-aeb8-45e6-b8de-cf900e60b30d/ghat-walk.mp4`,
     poster: `${A}/2ccceb97-0b10-4ff9-9950-0436fc2dfb42/ghat-walk.jpg`,
-    label: "घाट की ओर",
-    category: "shraddhalu",
+    label: "Walk to the Ghat",
+    category: "people",
   },
   devotee: {
     id: "devotee",
     video: `${A}/de862eeb-7f14-4948-bb36-e86d8b8b96f1/devotee.mp4`,
     poster: `${A}/a8bdfe3c-5f3f-4d52-81dd-5250df70ec10/devotee.jpg`,
-    label: "व्रती माँ",
-    category: "shraddhalu",
+    label: "The Vratis",
+    category: "people",
   },
   arghyaThali: {
     id: "arghyaThali",
     video: `${A}/fcc3557c-f2d2-406a-94e8-ab8d83bd12f7/arghya-thali.mp4`,
     poster: `${A}/ff5c8163-6888-4ed7-9752-edae661a984d/arghya-thali.jpg`,
-    label: "अर्घ्य की थाली",
-    category: "tokri",
+    label: "Arghya Offering",
+    category: "offerings",
   },
   templeCrowd: {
     id: "templeCrowd",
     video: `${A}/4f7cab88-a10b-4401-bf3e-9e72c9c5c363/temple-crowd.mp4`,
     poster: `${A}/e57e97fa-4208-46a4-8002-a9fab0fc0219/temple-crowd.jpg`,
-    label: "मंदिर के पास",
-    category: "mandir",
+    label: "Near the Temple",
+    category: "temple",
   },
   droneGhat: {
     id: "droneGhat",
     video: `${A}/144a7aa4-bd03-4aaf-8a0f-db45da09e31e/drone-ghat.mp4`,
     poster: `${A}/cf3138ed-2fcf-4ae0-981c-f3691e5e3e79/drone-ghat.jpg`,
-    label: "रफीगंज का घाट",
-    category: "sandhya",
+    label: "Rafiganj Ghat",
+    category: "ghat",
   },
   droneWater: {
     id: "droneWater",
     video: `${A}/4fccb500-e9ca-486a-9974-e01fd10b9d66/drone-water.mp4`,
     poster: `${A}/35e64a10-98d4-49eb-90ee-d2b10205a9e6/drone-water.jpg`,
-    label: "पानी और परछाई",
-    category: "roshni",
+    label: "Water & Reflections",
+    category: "ghat",
   },
   sunriseTemple: {
     id: "sunriseTemple",
     video: `${A}/9b34fe22-a626-4443-82bf-35733180ffde/sunrise-temple.mp4`,
     poster: `${A}/2b36074f-d57f-4ba5-b3eb-d6bdc93b3b8d/sunrise-temple.jpg`,
-    label: "उषा अर्घ्य",
-    category: "pratah",
+    label: "Morning Arghya",
+    category: "morning",
   },
   prasad: {
     id: "prasad",
     video: `${A}/f438ccd6-ee99-434e-923b-b929ad1f4a56/prasad.mp4`,
     poster: `${A}/b4b470cf-9397-4c46-bf04-cfd44c34f2bf/prasad.jpg`,
-    label: "प्रसाद की तैयारी",
-    category: "tokri",
+    label: "Prasad Preparation",
+    category: "offerings",
   },
   waterCrowd: {
     id: "waterCrowd",
     video: `${A}/2b02a477-d772-4904-ad50-63ce01c64e49/water-crowd.mp4`,
     poster: `${A}/4a36b8bc-27cd-4902-8f34-ae7342605fbc/water-crowd.jpg`,
-    label: "जल में आस्था",
-    category: "yaadein",
+    label: "Faith in the Water",
+    category: "people",
   },
 } satisfies Record<string, Clip>;
 
 export const clipList: Clip[] = Object.values(clips);
 
 export const galleryCategories = [
-  { id: "all", label: "सब", icon: "❤️" },
-  { id: "sandhya", label: "संध्या अर्घ्य", icon: "🌅" },
-  { id: "pratah", label: "प्रातः अर्घ्य", icon: "☀️" },
-  { id: "roshni", label: "घाट की रोशनी", icon: "🪔" },
-  { id: "tokri", label: "छठ की टोकरी", icon: "🌾" },
-  { id: "shraddhalu", label: "श्रद्धालु", icon: "🙏" },
-  { id: "mandir", label: "मंदिर", icon: "🛕" },
-  { id: "yaadein", label: "रफीगंज की यादें", icon: "❤️" },
+  { id: "all", label: "All" },
+  { id: "ghat", label: "The Ghat" },
+  { id: "people", label: "People" },
+  { id: "offerings", label: "Offerings" },
+  { id: "morning", label: "Morning" },
+  { id: "temple", label: "Temple" },
 ];
 
 // ── Chhath Puja 2026 (Kartik Shukla) — times in IST (UTC+5:30) ──────────
@@ -91,7 +89,7 @@ const ist = (s: string) => new Date(`${s}${IST}`);
 export type Stage = {
   id: string;
   name: string;
-  icon: string;
+  native: string;
   date: Date;
   dateLabel: string;
   desc: string;
@@ -101,47 +99,47 @@ export type Stage = {
 export const stages: Stage[] = [
   {
     id: "nahay",
-    name: "नहाय-खाय",
-    icon: "🛁",
+    name: "Nahay Khay",
+    native: "नहाय-खाय",
     date: ist("2026-11-13T07:00:00"),
-    dateLabel: "13 नवम्बर 2026",
-    desc: "स्नान, शुद्धता और व्रत की शुरुआत। कद्दू-भात का पहला प्रसाद।",
+    dateLabel: "13 Nov 2026",
+    desc: "The fast begins with a ritual bath and the first sattvik meal of the festival.",
     clip: clips.ghatWalk,
   },
   {
     id: "kharna",
-    name: "खरना",
-    icon: "🍚",
+    name: "Kharna",
+    native: "खरना",
     date: ist("2026-11-14T18:00:00"),
-    dateLabel: "14 नवम्बर 2026",
-    desc: "दिनभर का निर्जला उपवास, शाम को गुड़ की खीर और रोटी।",
+    dateLabel: "14 Nov 2026",
+    desc: "A day-long fast without water, broken at dusk with jaggery kheer and roti.",
     clip: clips.prasad,
   },
   {
     id: "sandhya",
-    name: "संध्या अर्घ्य",
-    icon: "🌇",
+    name: "Sandhya Arghya",
+    native: "संध्या अर्घ्य",
     date: ist("2026-11-15T17:05:00"),
-    dateLabel: "15 नवम्बर 2026",
-    desc: "डूबते सूरज को पहला अर्घ्य। रफीगंज का घाट भर जाता है।",
+    dateLabel: "15 Nov 2026",
+    desc: "The first offering, made to the setting sun. Every ghat in Rafiganj fills up.",
     clip: clips.droneGhat,
   },
   {
     id: "pratah",
-    name: "प्रातः अर्घ्य",
-    icon: "🌅",
+    name: "Pratah Arghya",
+    native: "प्रातः अर्घ्य",
     date: ist("2026-11-16T06:05:00"),
-    dateLabel: "16 नवम्बर 2026",
-    desc: "उगते सूरज को अर्घ्य — उषा अर्घ्य, महापर्व का शिखर।",
+    dateLabel: "16 Nov 2026",
+    desc: "The offering to the rising sun — the high point of the four days.",
     clip: clips.sunriseTemple,
   },
   {
     id: "paran",
-    name: "पारण",
-    icon: "🙏",
+    name: "Paran",
+    native: "पारण",
     date: ist("2026-11-16T08:30:00"),
-    dateLabel: "16 नवम्बर 2026",
-    desc: "36 घंटे का व्रत पूरा। प्रसाद ग्रहण और छठी मैया का आशीर्वाद।",
+    dateLabel: "16 Nov 2026",
+    desc: "Thirty-six hours of fasting end. Prasad is shared across the neighbourhood.",
     clip: clips.waterCrowd,
   },
 ];
@@ -150,52 +148,66 @@ export const story = [
   {
     n: "01",
     clip: clips.droneGhat,
-    title: "ये सिर्फ घाट नहीं…",
-    sub: "यहाँ हर साल पूरा रफीगंज एक साथ खड़ा होता है।",
+    title: "The Ghat",
+    sub: "One bend of water where the whole town shows up, year after year.",
   },
   {
     n: "02",
     clip: clips.prasad,
-    title: "हर तैयारी में एक विश्वास…",
-    sub: "ठेकुआ, गन्ना, फल — सब कुछ मन से।",
+    title: "Preparation",
+    sub: "Thekua, sugarcane, fruit — everything made by hand, at home.",
   },
   {
     n: "03",
     clip: clips.devotee,
-    title: "हर चेहरे पर एक प्रार्थना…",
-    sub: "व्रती माँओं का 36 घंटे का संकल्प।",
+    title: "The Devotees",
+    sub: "Thirty-six hours of fasting, carried quietly.",
   },
   {
     n: "04",
     clip: clips.arghyaThali,
-    title: "हर डूबते सूरज को एक प्रणाम…",
-    sub: "संध्या अर्घ्य — जल में उतरती आस्था।",
+    title: "Evening Arghya",
+    sub: "The first offering goes to the sun that is leaving.",
   },
   {
     n: "05",
     clip: clips.droneWater,
-    title: "रात भी यहाँ रोशनी से भर जाती है…",
-    sub: "दीये, सजावट और पानी में काँपती परछाइयाँ।",
+    title: "The Night",
+    sub: "Lamps on the steps, light shivering on the water.",
   },
   {
     n: "06",
     clip: clips.sunriseTemple,
-    title: "और उगते सूरज के साथ…",
-    sub: "प्रातः अर्घ्य — पूरा घाट एक स्वर में।",
+    title: "Morning Arghya",
+    sub: "The whole ghat turns east at the same moment.",
   },
   {
     n: "07",
     clip: clips.waterCrowd,
-    title: "एक नई उम्मीद जन्म लेती है। ❤️",
-    sub: "जय छठी मैया 🙏",
+    title: "After",
+    sub: "The water settles. Everyone walks home together.",
   },
 ];
 
+// ── Music: streamed live from YouTube ───────────────────────────────────
+export type Track = { id: string; title: string; artist: string; cat: string };
+
 export const musicCategories = [
-  { id: "sandhya", label: "संध्या अर्घ्य", icon: "🌅" },
-  { id: "pratah", label: "प्रातः अर्घ्य", icon: "☀️" },
-  { id: "maiya", label: "छठी मैया", icon: "🙏" },
-  { id: "rafiganj", label: "रफीगंज स्पेशल", icon: "❤️" },
+  { id: "classics", label: "Classics" },
+  { id: "arghya", label: "Arghya" },
+  { id: "new", label: "New 2025" },
+];
+
+export const tracks: Track[] = [
+  { id: "DG8F-csoRAQ", title: "Pahile Pahil Chhathi Maiya", artist: "Sharda Sinha", cat: "classics" },
+  { id: "knZ8b5YnQiY", title: "Kelwa Ke Paat Par", artist: "Sharda Sinha", cat: "classics" },
+  { id: "gh6cssL0dr8", title: "Best of Sharda Sinha (Jukebox)", artist: "Sharda Sinha", cat: "classics" },
+  { id: "fOVGz9WFymU", title: "Ho Deenanath", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "j9G3caThH98", title: "Uthau Suruj Bhaile Bihaan", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "6DePUrUWtmE", title: "Chhathi Maiya — Full Jukebox", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "FPDKM5NidYM", title: "Kawana Kalamwa Se Likhla Karamwa", artist: "Pawan Singh", cat: "new" },
+  { id: "tnARZzZ4oE0", title: "Koshiya Bharaye Lagal", artist: "Neelkamal Singh", cat: "new" },
+  { id: "8BfbY0vb7Ro", title: "Aahe Aaditmal", artist: "Pandey Sisters", cat: "new" },
 ];
 
 export const GITHUB_URL = "https://github.com/avi4748sinha";

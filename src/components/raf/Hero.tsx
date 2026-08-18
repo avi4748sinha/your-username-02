@@ -5,18 +5,24 @@ import { CinemaVideo } from "./CinemaVideo";
 import { Diyas } from "./Ambience";
 
 const beats = [
-  { t: 2600, node: <span className="font-display text-6xl leading-none sm:text-8xl">रफीगंज…</span> },
+  { t: 2500, node: <span className="font-display text-6xl leading-none sm:text-8xl">Rafiganj</span> },
   {
-    t: 2600,
+    t: 2500,
     node: (
       <span className="font-display text-5xl leading-tight sm:text-7xl">
-        छठ पूजा <span className="text-gold-gradient">2026</span>
+        Chhath Puja <span className="text-gold-gradient">2026</span>
       </span>
     ),
   },
-  { t: 2400, node: <span className="font-hindi text-3xl sm:text-4xl">कुछ त्योहार मनाए नहीं जाते…</span> },
-  { t: 2400, node: <span className="font-hindi text-3xl sm:text-4xl">महसूस किए जाते हैं। ❤️</span> },
-  { t: 3000, node: <span className="font-display text-4xl sm:text-6xl">जय छठी मैया 🙏</span> },
+  {
+    t: 2400,
+    node: <span className="font-ui text-2xl font-light leading-snug sm:text-3xl">Four days. One river bend.</span>,
+  },
+  {
+    t: 2400,
+    node: <span className="font-ui text-2xl font-light leading-snug sm:text-3xl">The whole town, in the water.</span>,
+  },
+  { t: 3200, node: <span className="font-display text-4xl sm:text-6xl">जय छठी मैया</span> },
 ];
 
 export function Hero() {
@@ -49,13 +55,13 @@ export function Hero() {
 
       {/* the first diya */}
       <motion.div
-        className="absolute left-1/2 top-[26%] -translate-x-1/2"
+        className="absolute left-1/2 top-[24%] -translate-x-1/2"
         initial={{ opacity: 0, scale: 0.4 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 2.4, ease: "easeOut" }}
       >
         <div
-          className="h-5 w-5 rounded-full"
+          className="h-4 w-4 rounded-full"
           style={{
             background: "radial-gradient(circle at 50% 40%, var(--cream), var(--gold) 45%, var(--vermilion) 90%)",
             boxShadow: "0 0 42px 10px color-mix(in oklab, var(--sunset) 55%, transparent)",
@@ -64,7 +70,7 @@ export function Hero() {
         />
       </motion.div>
 
-      <Diyas count={16} />
+      <Diyas count={14} />
 
       <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
         <div className="flex min-h-[42vh] items-center justify-center">
@@ -76,7 +82,7 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -18, filter: "blur(10px)" }}
                 transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-[18ch] text-cream drop-shadow-[0_6px_28px_rgba(0,0,0,0.7)]"
+                className="max-w-[20ch] text-cream drop-shadow-[0_6px_28px_rgba(0,0,0,0.7)]"
               >
                 {beats[i]!.node}
               </motion.h1>
@@ -90,12 +96,13 @@ export function Hero() {
           transition={{ delay: 12, duration: 1.4 }}
           className="absolute bottom-28 flex flex-col items-center gap-2"
         >
-          <span className="font-hindi text-sm text-cream/70">जहाँ आस्था सिर्फ दिखाई नहीं देती… महसूस होती है।</span>
-          <span className="text-[11px] uppercase tracking-[0.35em] text-gold/80">Rafiganj, Bihar 🇮🇳</span>
+          <span className="font-ui text-[11px] uppercase tracking-[0.35em] text-gold/80">
+            Rafiganj · Bihar · India
+          </span>
           <motion.span
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2.2, repeat: Infinity }}
-            className="mt-1 text-gold"
+            className="mt-1 text-cream/50"
           >
             ↓
           </motion.span>

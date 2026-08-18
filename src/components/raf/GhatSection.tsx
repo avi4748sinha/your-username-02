@@ -14,12 +14,13 @@ export function GhatSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 1 }}
         >
-          <h2 className="font-display text-5xl text-cream">रफीगंज के घाट</h2>
-          <p className="mt-3 max-w-[24ch] font-hindi text-lg text-cream/80">
-            जहाँ हर साल आस्था पानी में उतरती है।
+          <p className="font-ui text-[11px] uppercase tracking-[0.4em] text-gold/70">The location</p>
+          <h2 className="mt-3 font-display text-5xl text-cream">Rafiganj Ghat</h2>
+          <p className="mt-3 max-w-[30ch] font-ui text-base leading-relaxed text-cream/70">
+            Every November the steps disappear under people, and faith walks into the water.
           </p>
-          <span className="glass mt-5 inline-block rounded-full px-4 py-2 text-sm text-cream/85">
-            📍 Rafiganj, Bihar
+          <span className="glass mt-5 inline-block rounded-full px-4 py-2 font-ui text-xs tracking-[0.2em] text-cream/85">
+            24.8151° N, 84.6394° E
           </span>
         </motion.div>
       </div>

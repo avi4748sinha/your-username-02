@@ -13,13 +13,13 @@ export function CinematicStory() {
         >
           <CinemaVideo src={s.clip.video} poster={s.clip.poster} />
           <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/25 to-midnight/70" />
-          {i >= 4 && <Diyas count={10} />}
+          {i >= 4 && <Diyas count={8} />}
 
           <div className="absolute inset-x-0 top-6 flex justify-center gap-1.5 px-6">
             {story.map((_, j) => (
               <span
                 key={j}
-                className={`h-[3px] flex-1 rounded-full ${j <= i ? "bg-gold" : "bg-cream/20"}`}
+                className={`h-[2px] flex-1 rounded-full ${j <= i ? "bg-gold" : "bg-cream/20"}`}
               />
             ))}
           </div>
@@ -31,11 +31,11 @@ export function CinematicStory() {
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="font-ui text-xs tracking-[0.45em] text-gold/85">SCENE {s.n}</span>
-              <h3 className="mt-3 max-w-[16ch] font-display text-[2.6rem] leading-[1.1] text-cream drop-shadow-[0_4px_22px_rgba(0,0,0,0.75)] sm:text-6xl">
+              <span className="font-ui text-[11px] tracking-[0.45em] text-gold/80">SCENE {s.n}</span>
+              <h3 className="mt-3 max-w-[16ch] font-display text-[2.8rem] leading-[1.05] text-cream drop-shadow-[0_4px_22px_rgba(0,0,0,0.75)] sm:text-6xl">
                 {s.title}
               </h3>
-              <p className="mt-3 max-w-[26ch] font-hindi text-base text-cream/75">{s.sub}</p>
+              <p className="mt-3 max-w-[32ch] font-ui text-[15px] leading-relaxed text-cream/70">{s.sub}</p>
             </motion.div>
           </div>
         </div>
