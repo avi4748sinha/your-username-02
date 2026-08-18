@@ -1,112 +1,44 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { clips } from "@/data/rafiganj";
 import { CinemaVideo } from "./CinemaVideo";
-import { Diyas } from "./Ambience";
-
-const beats = [
-  { t: 2500, node: <span className="font-display text-6xl leading-none sm:text-8xl">Rafiganj</span> },
-  {
-    t: 2500,
-    node: (
-      <span className="font-display text-5xl leading-tight sm:text-7xl">
-        Chhath Puja <span className="text-gold-gradient">2026</span>
-      </span>
-    ),
-  },
-  {
-    t: 2400,
-    node: <span className="font-ui text-2xl font-light leading-snug sm:text-3xl">Four days. One river bend.</span>,
-  },
-  {
-    t: 2400,
-    node: <span className="font-ui text-2xl font-light leading-snug sm:text-3xl">The whole town, in the water.</span>,
-  },
-  { t: 3200, node: <span className="font-display text-4xl sm:text-6xl">जय छठी मैया</span> },
-];
 
 export function Hero() {
-  const [i, setI] = useState(-1);
-  const [videoIn, setVideoIn] = useState(false);
-
-  useEffect(() => {
-    const timers: number[] = [];
-    let acc = 1400;
-    timers.push(window.setTimeout(() => setVideoIn(true), 2200));
-    beats.forEach((b, idx) => {
-      timers.push(window.setTimeout(() => setI(idx), acc));
-      acc += b.t;
-    });
-    return () => timers.forEach(clearTimeout);
-  }, []);
-
   return (
-    <section id="home" className="relative min-h-[100svh] w-full overflow-hidden bg-midnight grain vignette">
+    <section className="relative min-h-[100svh] w-full overflow-hidden bg-midnight grain vignette">
       <motion.div
-        className="absolute inset-0"
-        initial={{ opacity: 0, filter: "blur(18px)" }}
-        animate={{ opacity: videoIn ? 0.72 : 0, filter: videoIn ? "blur(0px)" : "blur(18px)" }}
-        transition={{ duration: 3.2, ease: "easeOut" }}
+        className="absolute inset-0 vintage"
+        initial={{ opacity: 0, filter: "blur(14px)" }}
+        animate={{ opacity: 0.6 }}
+        transition={{ duration: 2.6, ease: "easeOut" }}
       >
         <CinemaVideo src={clips.droneGhat.video} poster={clips.droneGhat.poster} eager />
       </motion.div>
+      <div className="absolute inset-0 bg-gradient-to-b from-midnight/80 via-midnight/40 to-midnight" />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-midnight/85 via-midnight/35 to-midnight" />
-
-      {/* the first diya */}
-      <motion.div
-        className="absolute left-1/2 top-[24%] -translate-x-1/2"
-        initial={{ opacity: 0, scale: 0.4 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 2.4, ease: "easeOut" }}
-      >
-        <div
-          className="h-4 w-4 rounded-full"
-          style={{
-            background: "radial-gradient(circle at 50% 40%, var(--cream), var(--gold) 45%, var(--vermilion) 90%)",
-            boxShadow: "0 0 42px 10px color-mix(in oklab, var(--sunset) 55%, transparent)",
-            animation: "raf-flicker 2.6s ease-in-out infinite",
-          }}
-        />
-      </motion.div>
-
-      <Diyas count={14} />
-
-      <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
-        <div className="flex min-h-[42vh] items-center justify-center">
-          <AnimatePresence mode="wait">
-            {i >= 0 && (
-              <motion.h1
-                key={i}
-                initial={{ opacity: 0, y: 26, filter: "blur(14px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -18, filter: "blur(10px)" }}
-                transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-[20ch] text-cream drop-shadow-[0_6px_28px_rgba(0,0,0,0.7)]"
-              >
-                {beats[i]!.node}
-              </motion.h1>
-            )}
-          </AnimatePresence>
-        </div>
-
+      <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-8 text-center">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 12, duration: 1.4 }}
-          className="absolute bottom-28 flex flex-col items-center gap-2"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="font-ui text-[11px] uppercase tracking-[0.35em] text-gold/80">
-            Rafiganj · Bihar · India
-          </span>
-          <motion.span
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2.2, repeat: Infinity }}
-            className="mt-1 text-cream/50"
-          >
-            ↓
-          </motion.span>
+          <p className="font-ui text-[11px] uppercase tracking-[0.55em] text-gold/70">Est. Rafiganj · Bihar</p>
+
+          <div className="mx-auto mt-6 w-full max-w-sm border-y border-gold/25 py-6">
+            <h1 className="font-display text-5xl leading-none text-cream sm:text-7xl">Chhath Puja</h1>
+            <p className="mt-2 font-display text-6xl leading-none text-gold-gradient sm:text-8xl">2026</p>
+          </div>
+
+          <p className="mt-6 font-ui text-lg italic text-cream/70">Four days. One river bend.</p>
+          <p className="mt-1 font-hindi text-base text-cream/45">जय छठी मैया</p>
         </motion.div>
+
+        <motion.span
+          animate={{ y: [0, 7, 0] }}
+          transition={{ duration: 2.4, repeat: Infinity }}
+          className="absolute bottom-24 text-cream/40"
+        >
+          ↓
+        </motion.span>
       </div>
     </section>
   );
