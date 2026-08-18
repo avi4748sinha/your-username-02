@@ -17,22 +17,23 @@ export function VideoGallery() {
   };
 
   return (
-    <section id="rafiganj" className="relative px-5 py-16">
-      <h2 className="text-center font-display text-4xl text-cream sm:text-5xl">हमारा रफीगंज ❤️</h2>
-      <p className="mt-2 text-center font-hindi text-sm text-cream/60">
-        असली फुटेज, असली लोग, असली रफीगंज।
+    <section id="rafiganj" className="relative px-5 py-20">
+      <p className="text-center font-ui text-[11px] uppercase tracking-[0.4em] text-gold/70">Archive</p>
+      <h2 className="mt-3 text-center font-display text-4xl text-cream sm:text-5xl">Our Rafiganj</h2>
+      <p className="mt-2 text-center font-ui text-sm text-cream/55">
+        Shot at the ghat. No stock footage.
       </p>
 
-      <div className="mt-6 -mx-5 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none]">
+      <div className="mt-7 -mx-5 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none]">
         {galleryCategories.map((c) => (
           <button
             key={c.id}
             onClick={() => setCat(c.id)}
-            className={`shrink-0 rounded-full px-4 py-2 text-sm font-hindi transition-colors ${
-              cat === c.id ? "bg-gold text-midnight" : "glass text-cream/80"
+            className={`shrink-0 rounded-full px-4 py-2 font-ui text-xs tracking-wide transition-colors ${
+              cat === c.id ? "bg-gold text-midnight" : "glass text-cream/75"
             }`}
           >
-            {c.icon} {c.label}
+            {c.label}
           </button>
         ))}
       </div>
@@ -42,10 +43,10 @@ export function VideoGallery() {
           <button
             key={c.id}
             onClick={() => setOpen(i)}
-            className="group relative aspect-[9/16] overflow-hidden rounded-2xl border border-gold/15 grain"
+            className="group relative aspect-[9/16] overflow-hidden rounded-2xl border border-cream/10 grain"
           >
             <img src={c.poster} alt={c.label} loading="lazy" className="h-full w-full object-cover" />
-            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight to-transparent px-2 pb-2 pt-8 text-left font-hindi text-xs text-cream">
+            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight to-transparent px-2.5 pb-2.5 pt-10 text-left font-ui text-[11px] tracking-wide text-cream">
               {c.label}
             </span>
           </button>
@@ -79,11 +80,11 @@ function Viewer({ clip, onClose, onNav }: { clip: Clip; onClose: () => void; onN
         <CinemaVideo src={clip.video} poster={clip.poster} eager kenBurns={false} />
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-midnight to-transparent px-6 pb-10 pt-16">
           <p className="font-display text-3xl text-cream">{clip.label}</p>
-          <p className="mt-1 font-hindi text-sm text-cream/60">📍 रफीगंज, बिहार</p>
+          <p className="mt-1 font-ui text-xs tracking-[0.2em] text-cream/50">RAFIGANJ, BIHAR</p>
         </div>
         <button
           onClick={onClose}
-          aria-label="बंद करें"
+          aria-label="Close"
           className="glass absolute right-4 top-5 grid h-11 w-11 place-items-center rounded-full text-cream"
         >
           ✕
