@@ -62,26 +62,35 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --radius: 1rem;
+  --background: oklch(0.16 0.045 265);
+  --foreground: oklch(0.97 0.015 85);
+  --card: oklch(0.21 0.05 265);
+  --card-foreground: oklch(0.97 0.015 85);
+  --popover: oklch(0.19 0.05 265);
+  --popover-foreground: oklch(0.97 0.015 85);
+  --primary: oklch(0.58 0.21 32);
+  --primary-foreground: oklch(0.98 0.012 85);
+  --secondary: oklch(0.72 0.17 62);
+  --secondary-foreground: oklch(0.18 0.045 265);
+  --muted: oklch(0.28 0.045 265);
+  --muted-foreground: oklch(0.76 0.03 80);
+  --accent: oklch(0.83 0.15 85);
+  --accent-foreground: oklch(0.18 0.045 265);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.72 0.17 62);
+  --midnight: oklch(0.16 0.045 265);
+  --vermilion: oklch(0.52 0.2 28);
+  --sunset: oklch(0.68 0.19 48);
+  --gold: oklch(0.85 0.15 88);
+  --earth: oklch(0.4 0.07 62);
+  --cream: oklch(0.95 0.03 85);
+  --font-display: "Rozha One", "Tiro Devanagari Hindi", serif;
+  --font-hindi: "Tiro Devanagari Hindi", serif;
+  --font-ui: "Outfit", system-ui, sans-serif;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -141,4 +150,96 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+@theme inline {
+  --color-midnight: var(--midnight);
+  --color-vermilion: var(--vermilion);
+  --color-sunset: var(--sunset);
+  --color-gold: var(--gold);
+  --color-earth: var(--earth);
+  --color-cream: var(--cream);
+  --font-display: var(--font-display);
+  --font-hindi: var(--font-hindi);
+  --font-ui: var(--font-ui);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--midnight) 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--gold) 22%, transparent);
+}
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@utility vignette {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 38%, oklch(0.1 0.04 265 / 0.85) 100%);
+  }
+}
+
+@utility text-gold-gradient {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--gold) 55%, var(--sunset) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes raf-float {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translate3d(var(--dx, 12px), -120vh, 0) scale(0.6); opacity: 0; }
+}
+
+@keyframes raf-ripple {
+  0% { transform: scale(0.4); opacity: 0.55; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+@keyframes raf-flicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  45% { opacity: 0.72; transform: scale(0.94); }
+}
+
+@keyframes raf-kenburns {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.18); }
+}
+
+@utility ken-burns {
+  animation: raf-kenburns 18s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html { scroll-behavior: auto; }
 }
