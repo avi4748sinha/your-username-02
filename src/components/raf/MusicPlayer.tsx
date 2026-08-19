@@ -38,6 +38,8 @@ export function MusicPlayer() {
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [time, setTime] = useState({ cur: 0, dur: 0 });
+  const [scrubbing, setScrubbing] = useState(false);
   const [cat, setCat] = useState(musicCategories[0]!.id);
   const [open, setOpen] = useState(false);
   const [shuffle, setShuffle] = useState(false);
