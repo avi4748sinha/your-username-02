@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { story } from "@/data/rafiganj";
 import { CinemaVideo } from "./CinemaVideo";
