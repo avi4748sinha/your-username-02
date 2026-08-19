@@ -163,10 +163,12 @@
   --color-gold: var(--gold);
   --color-earth: var(--earth);
   --color-cream: var(--cream);
+  --color-tide: var(--tide);
   --font-display: var(--font-display);
   --font-hindi: var(--font-hindi);
   --font-ui: var(--font-ui);
 }
+
 
 html {
   scroll-behavior: smooth;
