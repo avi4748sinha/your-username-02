@@ -251,11 +251,11 @@ body {
   100% { background-position: 200% 50%; }
 }
 
-/* Thin animated RGB hairline — the one flash of colour on the black theme. */
+/* Thin animated hairline — a warm retro film strip of colour. */
 @utility rgb-line {
-  background: linear-gradient(90deg, oklch(0.62 0.25 27), oklch(0.6 0.25 330), oklch(0.62 0.2 260), oklch(0.62 0.25 27));
+  background: linear-gradient(90deg, oklch(0.62 0.19 38), oklch(0.78 0.13 78), oklch(0.55 0.12 150), oklch(0.62 0.19 38));
   background-size: 200% 100%;
-  animation: raf-rgb 7s linear infinite;
+  animation: raf-rgb 9s linear infinite;
 }
 
 @utility frame {
