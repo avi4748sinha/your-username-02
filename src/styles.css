@@ -63,9 +63,9 @@
 
 :root {
   --radius: 1rem;
-  --background: oklch(0.16 0.045 265);
+  --background: oklch(0.07 0.003 285);
   --foreground: oklch(0.97 0.015 85);
-  --card: oklch(0.21 0.05 265);
+  --card: oklch(0.12 0.004 285);
   --card-foreground: oklch(0.97 0.015 85);
   --popover: oklch(0.19 0.05 265);
   --popover-foreground: oklch(0.97 0.015 85);
@@ -83,13 +83,13 @@
   --input: oklch(1 0 0 / 14%);
   --ring: oklch(0.72 0.17 62);
   /* Night-blue cinema palette: deep indigo river, ember lamp, ice type. */
-  --midnight: oklch(0.14 0.045 258);
-  --vermilion: oklch(0.55 0.17 32);
-  --sunset: oklch(0.72 0.14 62);
-  --gold: oklch(0.84 0.12 84);
-  --earth: oklch(0.36 0.06 250);
-  --cream: oklch(0.96 0.012 240);
-  --tide: oklch(0.62 0.13 230);
+  --midnight: oklch(0.09 0.004 285);
+  --vermilion: oklch(0.58 0.23 26);
+  --sunset: oklch(0.66 0.22 22);
+  --gold: oklch(0.72 0.2 30);
+  --earth: oklch(0.24 0.01 285);
+  --cream: oklch(0.97 0 0);
+  --tide: oklch(0.6 0.245 27);
   --font-display: "Instrument Serif", Georgia, serif;
   --font-hindi: "Tiro Devanagari Hindi", serif;
   --font-ui: "Inter Tight", system-ui, sans-serif;
@@ -243,7 +243,19 @@ body {
 }
 
 @utility cool {
-  filter: saturate(0.75) contrast(1.1) brightness(0.82) hue-rotate(-14deg);
+  filter: saturate(0.6) contrast(1.16) brightness(0.72);
+}
+
+@keyframes raf-rgb {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Thin animated RGB hairline — the one flash of colour on the black theme. */
+@utility rgb-line {
+  background: linear-gradient(90deg, oklch(0.62 0.25 27), oklch(0.6 0.25 330), oklch(0.62 0.2 260), oklch(0.62 0.25 27));
+  background-size: 200% 100%;
+  animation: raf-rgb 7s linear infinite;
 }
 
 @utility frame {

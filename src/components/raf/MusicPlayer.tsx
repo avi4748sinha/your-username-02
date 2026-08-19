@@ -10,6 +10,12 @@ declare global {
   }
 }
 
+const fmt = (s: number) => {
+  if (!Number.isFinite(s) || s <= 0) return "0:00";
+  const m = Math.floor(s / 60);
+  return `${m}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+};
+
 let apiPromise: Promise<any> | null = null;
 function loadYT(): Promise<any> {
   if (apiPromise) return apiPromise;
@@ -38,6 +44,8 @@ export function MusicPlayer() {
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [time, setTime] = useState({ cur: 0, dur: 0 });
+  const [scrubbing, setScrubbing] = useState(false);
   const [cat, setCat] = useState(musicCategories[0]!.id);
   const [open, setOpen] = useState(false);
   const [shuffle, setShuffle] = useState(false);
@@ -98,12 +106,22 @@ export function MusicPlayer() {
   useEffect(() => {
     const t = setInterval(() => {
       const p = player.current;
-      if (!p?.getDuration) return;
+      if (!p?.getDuration || scrubbing) return;
       const d = p.getDuration();
-      setProgress(d ? (p.getCurrentTime() / d) * 100 : 0);
-    }, 500);
+      const c = p.getCurrentTime();
+      setTime({ cur: c, dur: d });
+      setProgress(d ? (c / d) * 100 : 0);
+    }, 400);
     return () => clearInterval(t);
-  }, []);
+  }, [scrubbing]);
+
+  const seekTo = (pct: number) => {
+    const p = player.current;
+    const d = time.dur || p?.getDuration?.() || 0;
+    if (!p?.seekTo || !d) return;
+    p.seekTo((pct / 100) * d, true);
+    setProgress(pct);
+  };
 
   /** Kept in a ref so the YouTube callback always sees the current shuffle mode. */
   const nextIndex = useRef((p: number, d: number) => (p + d + tracks.length) % tracks.length);
@@ -151,8 +169,32 @@ export function MusicPlayer() {
           <div className="min-w-0">
             <p className="truncate font-ui text-[13px] font-medium leading-tight text-cream">{current?.title}</p>
             <p className="truncate font-ui text-[11px] text-cream/40">{current?.artist}</p>
-            <div className="mt-1.5 h-[2px] w-full overflow-hidden rounded-full bg-cream/10">
-              <div className="h-full rounded-full bg-tide transition-[width] duration-500" style={{ width: `${progress}%` }} />
+            <div className="relative mt-1.5 flex items-center gap-2">
+              <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-cream/10">
+                <div className="h-full rounded-full rgb-line" style={{ width: `${progress}%` }} />
+              </div>
+              <span className="shrink-0 font-ui text-[9px] tabular-nums text-cream/35">
+                {fmt(time.cur)} / {fmt(time.dur)}
+              </span>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                step={0.1}
+                value={progress}
+                aria-label="Seek"
+                onPointerDown={() => setScrubbing(true)}
+                onChange={(e) => setProgress(Number(e.target.value))}
+                onPointerUp={(e) => {
+                  seekTo(Number((e.target as HTMLInputElement).value));
+                  setScrubbing(false);
+                }}
+                onKeyUp={(e) => {
+                  seekTo(Number((e.target as HTMLInputElement).value));
+                  setScrubbing(false);
+                }}
+                className="absolute inset-x-0 -top-2 h-6 w-full cursor-pointer opacity-0"
+              />
             </div>
           </div>
 

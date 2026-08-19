@@ -54,7 +54,7 @@ export function EntryGate() {
               onClick={enter}
               className="group mt-12 inline-flex items-center gap-3 rounded-full border border-cream/15 px-7 py-3 font-ui text-[11px] uppercase tracking-[0.35em] text-cream/85 transition-colors hover:border-tide/60 sheen"
             >
-              Enter with sound
+              Enter the night
               <span className="text-tide transition-transform group-hover:translate-x-1">→</span>
             </motion.button>
 
