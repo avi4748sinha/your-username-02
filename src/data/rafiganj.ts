@@ -108,6 +108,15 @@ export const clips = {
 
 export const clipList: Clip[] = Object.values(clips);
 
+/** The opening film — this one keeps its own sound and plays on entry. */
+export const introFilm = {
+  id: "introFilm",
+  video: "/__l5e/assets-v1/2f9b3679-51ae-41ce-9c7d-a54c108072a7/intro-anthem.mp4",
+  poster: "/__l5e/assets-v1/79cef30d-8b87-4032-b37c-d28d87be524c/intro-anthem.jpg",
+  label: "Rafiganj, opening film",
+  category: "ghat",
+} satisfies Clip;
+
 /** Full-screen ambience that starts once the visitor enters. */
 export const ambientClip = clips.nightAmbient;
 
