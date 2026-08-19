@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { story } from "@/data/rafiganj";
 import { CinemaVideo } from "./CinemaVideo";
@@ -9,6 +9,12 @@ export function CinematicStory() {
   const s = story[i]!;
 
   const go = (d: number) => setI((p) => (p + d + story.length) % story.length);
+
+  // keep the reel moving on its own; any swipe/tap resets the timer
+  useEffect(() => {
+    const id = setTimeout(() => setI((p) => (p + 1) % story.length), 6500);
+    return () => clearTimeout(id);
+  }, [i]);
 
   return (
     <section className="px-5 pb-14">
