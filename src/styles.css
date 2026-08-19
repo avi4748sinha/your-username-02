@@ -82,18 +82,18 @@
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 14%);
   --ring: oklch(0.72 0.17 62);
-  /* Night-blue cinema palette: deep indigo river, ember lamp, ice type. */
-  --midnight: oklch(0.09 0.004 285);
-  --vermilion: oklch(0.58 0.23 26);
-  --sunset: oklch(0.66 0.22 22);
-  --gold: oklch(0.72 0.2 30);
-  --earth: oklch(0.24 0.01 285);
-  --cream: oklch(0.97 0 0);
-  --tide: oklch(0.6 0.245 27);
+  /* Retro cinema palette: projector black, ember red, warm paper type. */
+  --midnight: oklch(0.08 0.006 55);
+  --vermilion: oklch(0.57 0.2 34);
+  --sunset: oklch(0.68 0.17 48);
+  --gold: oklch(0.78 0.13 78);
+  --earth: oklch(0.22 0.012 60);
+  --cream: oklch(0.95 0.022 85);
+  --tide: oklch(0.62 0.19 38);
   --font-display: "Instrument Serif", Georgia, serif;
   --font-hindi: "Tiro Devanagari Hindi", serif;
   --font-ui: "Inter Tight", system-ui, sans-serif;
-  --paper: oklch(0.9 0.02 240);
+  --paper: oklch(0.92 0.03 85);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -251,11 +251,11 @@ body {
   100% { background-position: 200% 50%; }
 }
 
-/* Thin animated RGB hairline — the one flash of colour on the black theme. */
+/* Thin animated hairline — a warm retro film strip of colour. */
 @utility rgb-line {
-  background: linear-gradient(90deg, oklch(0.62 0.25 27), oklch(0.6 0.25 330), oklch(0.62 0.2 260), oklch(0.62 0.25 27));
+  background: linear-gradient(90deg, oklch(0.62 0.19 38), oklch(0.78 0.13 78), oklch(0.55 0.12 150), oklch(0.62 0.19 38));
   background-size: 200% 100%;
-  animation: raf-rgb 7s linear infinite;
+  animation: raf-rgb 9s linear infinite;
 }
 
 @utility frame {

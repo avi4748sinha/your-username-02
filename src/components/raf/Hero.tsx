@@ -49,24 +49,7 @@ export function Hero() {
 
         <motion.div variants={line} transition={{ duration: 1 }} className="mt-6 flex items-center gap-4">
           <span className="h-px w-12 bg-cream/25" />
-          <p className="font-ui text-sm text-cream/60">Four days. One river bend.</p>
-        </motion.div>
-
-        <motion.div
-          variants={line}
-          transition={{ duration: 1 }}
-          className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-cream/10 bg-cream/5 text-center"
-        >
-          {[
-            ["13—16", "November"],
-            ["05:05", "Pratah IST"],
-            ["36 hrs", "Of fasting"],
-          ].map(([a, b]) => (
-            <div key={b} className="bg-midnight/60 px-2 py-3 backdrop-blur-xl">
-              <p className="font-display text-xl text-cream">{a}</p>
-              <p className="mt-0.5 font-ui text-[9px] uppercase tracking-[0.2em] text-cream/40">{b}</p>
-            </div>
-          ))}
+          <p className="font-ui text-sm text-cream/60">November 13 — 16, Rafiganj</p>
         </motion.div>
       </motion.div>
 

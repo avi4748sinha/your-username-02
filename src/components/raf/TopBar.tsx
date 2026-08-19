@@ -27,9 +27,9 @@ export function TopBar() {
           href={GITHUB_URL}
           target="_blank"
           rel="noreferrer noopener"
-          className="font-ui text-[10px] uppercase tracking-[0.3em] text-cream/45 transition-colors hover:text-cream"
+          className="font-ui text-[10px] uppercase tracking-[0.28em] text-cream/40 transition-colors hover:text-cream"
         >
-          {OWNER}
+          Managed by <span className="text-cream/70">{OWNER}</span>
         </a>
       </div>
     </motion.header>
