@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { stages } from "@/data/rafiganj";
 import { useNow } from "@/lib/useCountdown";
 
@@ -6,30 +7,44 @@ export function ChhathTimeline() {
   const activeIdx = now === null ? -1 : stages.findIndex((s) => s.date.getTime() > now);
 
   return (
-    <section className="px-6 pb-16">
+    <section className="px-5 pb-14">
       <div className="mx-auto max-w-md">
-        <p className="text-center font-ui text-[11px] uppercase tracking-[0.45em] text-gold/70">The Calendar</p>
-        <h2 className="mt-2 text-center font-display text-4xl text-cream">Four Days</h2>
-        <p className="mt-1 text-center font-ui text-sm italic text-cream/50">13 — 16 November 2026</p>
+        <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-tide">The Calendar</p>
+        <h2 className="mt-1 font-display text-3xl text-cream">13 — 16 November</h2>
 
-        <ol className="mt-6 border-t border-gold/15">
-          {stages.map((s, i) => (
-            <li
-              key={s.id}
-              className={`grid grid-cols-[auto_minmax(0,1fr)] gap-4 border-b border-gold/15 px-1 py-4 ${
-                i === activeIdx ? "bg-gold/[0.06]" : ""
-              }`}
-            >
-              <span className="pt-1 font-display text-sm tabular-nums text-gold/70">0{i + 1}</span>
-              <div className="min-w-0">
+        <ol className="relative mt-6 pl-6">
+          <span className="absolute bottom-2 left-[5px] top-2 w-px bg-gradient-to-b from-tide/50 via-cream/12 to-transparent" />
+          {stages.map((s, i) => {
+            const active = i === activeIdx;
+            return (
+              <motion.li
+                key={s.id}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.6, delay: i * 0.06 }}
+                className="relative pb-6 last:pb-0"
+              >
+                <span
+                  className={`absolute -left-6 top-2 h-[11px] w-[11px] rounded-full border ${
+                    active ? "border-tide bg-tide breathe" : "border-cream/25 bg-midnight"
+                  }`}
+                />
                 <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="truncate font-display text-2xl text-cream">{s.name}</h3>
-                  <span className="shrink-0 font-ui text-xs tracking-wide text-gold/70">{s.dateLabel}</span>
+                  <h3 className={`font-display text-2xl ${active ? "text-cream" : "text-cream/75"}`}>{s.name}</h3>
+                  <span className="shrink-0 font-ui text-[10px] uppercase tracking-[0.18em] text-cream/35">
+                    {s.dateLabel}
+                  </span>
                 </div>
-                <p className="mt-1 font-ui text-[15px] italic leading-snug text-cream/60">{s.desc}</p>
-              </div>
-            </li>
-          ))}
+                <p className="mt-1 font-ui text-sm leading-snug text-cream/45">{s.desc}</p>
+                {active && (
+                  <span className="mt-2 inline-block rounded-full border border-tide/40 px-2 py-0.5 font-ui text-[9px] uppercase tracking-[0.25em] text-tide">
+                    Up next
+                  </span>
+                )}
+              </motion.li>
+            );
+          })}
         </ol>
       </div>
     </section>
