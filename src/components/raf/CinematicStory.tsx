@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { story } from "@/data/rafiganj";
 import { CinemaVideo } from "./CinemaVideo";
 
-/** One vintage frame at a time — swipe or tap instead of endless scrolling. */
+/** One frame at a time — swipe or tap instead of endless scrolling. */
 export function CinematicStory() {
   const [i, setI] = useState(0);
   const s = story[i]!;
@@ -11,19 +11,27 @@ export function CinematicStory() {
   const go = (d: number) => setI((p) => (p + d + story.length) % story.length);
 
   return (
-    <section className="px-6 pb-16">
+    <section className="px-5 pb-14">
       <div className="mx-auto max-w-md">
-        <p className="text-center font-ui text-[11px] uppercase tracking-[0.45em] text-gold/70">The Reel</p>
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-tide">The Reel</p>
+            <h2 className="mt-1 font-display text-3xl text-cream">Eight frames</h2>
+          </div>
+          <span className="font-ui text-[11px] tabular-nums text-cream/35">
+            {String(i + 1).padStart(2, "0")} / {story.length}
+          </span>
+        </div>
 
-        <div className="relative mt-5 aspect-[9/13] overflow-hidden bg-midnight frame grain vintage">
+        <div className="relative mt-4 aspect-[9/14] overflow-hidden rounded-2xl bg-midnight frame grain">
           <AnimatePresence mode="wait">
             <motion.div
               key={s.n}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 1.06 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
-              className="absolute inset-0"
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0 cool"
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(_, info) => {
@@ -32,14 +40,23 @@ export function CinematicStory() {
               }}
             >
               <CinemaVideo src={s.clip.video} poster={s.clip.poster} kenBurns={false} />
-              <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/10 to-midnight/50" />
-              <div className="absolute inset-x-0 bottom-0 p-5">
-                <span className="font-ui text-[10px] tracking-[0.4em] text-gold/80">SCENE {s.n}</span>
-                <h3 className="mt-1.5 font-display text-3xl leading-tight text-cream">{s.title}</h3>
-                <p className="mt-1.5 max-w-[30ch] font-ui text-[15px] italic leading-snug text-cream/70">
-                  {s.sub}
-                </p>
-              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-midnight via-transparent to-midnight/40" />
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`t-${s.n}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="pointer-events-none absolute inset-x-0 bottom-0 p-5"
+            >
+              <span className="font-ui text-[9px] tracking-[0.4em] text-tide">SCENE {s.n}</span>
+              <h3 className="mt-1.5 font-display text-3xl leading-tight text-cream">{s.title}</h3>
+              <p className="mt-1 max-w-[30ch] font-ui text-sm leading-snug text-cream/55">{s.sub}</p>
             </motion.div>
           </AnimatePresence>
 
@@ -53,7 +70,7 @@ export function CinematicStory() {
               key={x.n}
               aria-label={`Scene ${x.n}`}
               onClick={() => setI(j)}
-              className={`h-[3px] w-8 rounded-full transition-colors ${j === i ? "bg-gold" : "bg-cream/20"}`}
+              className={`h-[2px] w-7 rounded-full transition-all ${j === i ? "bg-tide" : "bg-cream/15"}`}
             />
           ))}
         </div>
