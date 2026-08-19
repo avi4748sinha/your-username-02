@@ -69,15 +69,40 @@ export const clips = {
     label: "Faith in the Water",
     category: "people",
   },
+  nightAmbient: {
+    id: "nightAmbient",
+    video: `${A}/3335a5c1-848e-45b7-817e-791c5a4d0572/night-ambient.mp4`,
+    poster: `${A}/e2b0d837-c5fd-41a2-88f7-6b8d5dc0b222/night-ambient.jpg`,
+    label: "Diyas at Dusk",
+    category: "night",
+  },
+  offerings: {
+    id: "offerings",
+    video: `${A}/eb90b19b-d123-4141-990c-0f0327d93cf3/offerings.mp4`,
+    poster: `${A}/e77a48d4-e854-4b31-941d-1c81216860cd/offerings.jpg`,
+    label: "The Soop",
+    category: "offerings",
+  },
+  riverDiyas: {
+    id: "riverDiyas",
+    video: `${A}/269ff7ff-8ff9-4bcc-b88a-5c27b9b5a13a/river-diyas.mp4`,
+    poster: `${A}/9d13d83b-0198-4daa-95c8-5da823ad53cd/river-diyas.jpg`,
+    label: "Lamps on the Bank",
+    category: "night",
+  },
 } satisfies Record<string, Clip>;
 
 export const clipList: Clip[] = Object.values(clips);
+
+/** Full-screen ambience that starts once the visitor enters. */
+export const ambientClip = clips.nightAmbient;
 
 export const galleryCategories = [
   { id: "all", label: "All" },
   { id: "ghat", label: "The Ghat" },
   { id: "people", label: "People" },
   { id: "offerings", label: "Offerings" },
+  { id: "night", label: "Night" },
   { id: "morning", label: "Morning" },
   { id: "temple", label: "Temple" },
 ];
@@ -103,7 +128,7 @@ export const stages: Stage[] = [
     native: "नहाय-खाय",
     date: ist("2026-11-13T07:00:00"),
     dateLabel: "13 Nov 2026",
-    desc: "The fast begins with a ritual bath and the first sattvik meal of the festival.",
+    desc: "Ritual bath, first sattvik meal.",
     clip: clips.ghatWalk,
   },
   {
@@ -112,7 +137,7 @@ export const stages: Stage[] = [
     native: "खरना",
     date: ist("2026-11-14T18:00:00"),
     dateLabel: "14 Nov 2026",
-    desc: "A day-long fast without water, broken at dusk with jaggery kheer and roti.",
+    desc: "Day-long fast, broken at dusk with kheer.",
     clip: clips.prasad,
   },
   {
@@ -121,7 +146,7 @@ export const stages: Stage[] = [
     native: "संध्या अर्घ्य",
     date: ist("2026-11-15T17:05:00"),
     dateLabel: "15 Nov 2026",
-    desc: "The first offering, made to the setting sun. Every ghat in Rafiganj fills up.",
+    desc: "First offering, to the setting sun.",
     clip: clips.droneGhat,
   },
   {
@@ -130,7 +155,7 @@ export const stages: Stage[] = [
     native: "प्रातः अर्घ्य",
     date: ist("2026-11-16T06:05:00"),
     dateLabel: "16 Nov 2026",
-    desc: "The offering to the rising sun — the high point of the four days.",
+    desc: "Offering to the rising sun.",
     clip: clips.sunriseTemple,
   },
   {
@@ -139,75 +164,48 @@ export const stages: Stage[] = [
     native: "पारण",
     date: ist("2026-11-16T08:30:00"),
     dateLabel: "16 Nov 2026",
-    desc: "Thirty-six hours of fasting end. Prasad is shared across the neighbourhood.",
+    desc: "Thirty-six hours end. Prasad is shared.",
     clip: clips.waterCrowd,
   },
 ];
 
 export const story = [
-  {
-    n: "01",
-    clip: clips.droneGhat,
-    title: "The Ghat",
-    sub: "One bend of water where the whole town shows up, year after year.",
-  },
-  {
-    n: "02",
-    clip: clips.prasad,
-    title: "Preparation",
-    sub: "Thekua, sugarcane, fruit — everything made by hand, at home.",
-  },
-  {
-    n: "03",
-    clip: clips.devotee,
-    title: "The Devotees",
-    sub: "Thirty-six hours of fasting, carried quietly.",
-  },
-  {
-    n: "04",
-    clip: clips.arghyaThali,
-    title: "Evening Arghya",
-    sub: "The first offering goes to the sun that is leaving.",
-  },
-  {
-    n: "05",
-    clip: clips.droneWater,
-    title: "The Night",
-    sub: "Lamps on the steps, light shivering on the water.",
-  },
-  {
-    n: "06",
-    clip: clips.sunriseTemple,
-    title: "Morning Arghya",
-    sub: "The whole ghat turns east at the same moment.",
-  },
-  {
-    n: "07",
-    clip: clips.waterCrowd,
-    title: "After",
-    sub: "The water settles. Everyone walks home together.",
-  },
+  { n: "01", clip: clips.droneGhat, title: "The Ghat", sub: "One bend of water. The whole town." },
+  { n: "02", clip: clips.prasad, title: "Preparation", sub: "Thekua, cane, fruit — all by hand." },
+  { n: "03", clip: clips.offerings, title: "The Soop", sub: "Everything the river will be offered." },
+  { n: "04", clip: clips.devotee, title: "The Vratis", sub: "Thirty-six hours, carried quietly." },
+  { n: "05", clip: clips.arghyaThali, title: "Sandhya Arghya", sub: "The first offering leaves with the sun." },
+  { n: "06", clip: clips.riverDiyas, title: "The Night", sub: "Lamps down the bank, light on water." },
+  { n: "07", clip: clips.sunriseTemple, title: "Pratah Arghya", sub: "The ghat turns east together." },
+  { n: "08", clip: clips.waterCrowd, title: "After", sub: "The water settles. Everyone walks home." },
 ];
 
 // ── Music: streamed live from YouTube ───────────────────────────────────
 export type Track = { id: string; title: string; artist: string; cat: string };
 
 export const musicCategories = [
-  { id: "classics", label: "Classics" },
+  { id: "legend", label: "Sharda Sinha" },
   { id: "arghya", label: "Arghya" },
-  { id: "new", label: "New 2025" },
+  { id: "folk", label: "Folk" },
+  { id: "new", label: "New" },
 ];
 
 export const tracks: Track[] = [
-  { id: "DG8F-csoRAQ", title: "Pahile Pahil Chhathi Maiya", artist: "Sharda Sinha", cat: "classics" },
-  { id: "knZ8b5YnQiY", title: "Kelwa Ke Paat Par", artist: "Sharda Sinha", cat: "classics" },
-  { id: "gh6cssL0dr8", title: "Best of Sharda Sinha (Jukebox)", artist: "Sharda Sinha", cat: "classics" },
-  { id: "fOVGz9WFymU", title: "Ho Deenanath", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "DG8F-csoRAQ", title: "Pahile Pahil Chhathi Maiya", artist: "Sharda Sinha", cat: "legend" },
+  { id: "knZ8b5YnQiY", title: "Kelwa Ke Paat Par", artist: "Sharda Sinha", cat: "legend" },
+  { id: "fOVGz9WFymU", title: "Ho Deenanath", artist: "Sharda Sinha", cat: "legend" },
+  { id: "gh6cssL0dr8", title: "Best of Sharda Sinha (Jukebox)", artist: "Sharda Sinha", cat: "legend" },
   { id: "j9G3caThH98", title: "Uthau Suruj Bhaile Bihaan", artist: "Sharda Sinha", cat: "arghya" },
   { id: "6DePUrUWtmE", title: "Chhathi Maiya — Full Jukebox", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "vSMnJ9BFtLE", title: "Suna Chhathi Maiya", artist: "Anuradha Paudwal", cat: "arghya" },
+  { id: "0v0PW0AsCiE", title: "Marbo Re Sugwa Dhanukh Se", artist: "Sharda Sinha", cat: "folk" },
+  { id: "9Q9c8bUtWSA", title: "Chhath Geet — Traditional", artist: "Vinod Rathod", cat: "folk" },
+  { id: "8BfbY0vb7Ro", title: "Aahe Aaditmal", artist: "Pandey Sisters", cat: "folk" },
   { id: "FPDKM5NidYM", title: "Kawana Kalamwa Se Likhla Karamwa", artist: "Pawan Singh", cat: "new" },
   { id: "tnARZzZ4oE0", title: "Koshiya Bharaye Lagal", artist: "Neelkamal Singh", cat: "new" },
-  { id: "8BfbY0vb7Ro", title: "Aahe Aaditmal", artist: "Pandey Sisters", cat: "new" },
+  { id: "8ZmAqvJmXhs", title: "Chhathi Maiya Aaili Anganwa", artist: "Khesari Lal Yadav", cat: "new" },
+  { id: "5ZUCVGKlxD0", title: "Bahangi Lachkat Jaye", artist: "Kalpana Patowary", cat: "new" },
 ];
 
 export const GITHUB_URL = "https://github.com/avi4748sinha";
+export const OWNER = "Avinash";
