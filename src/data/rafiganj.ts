@@ -90,12 +90,36 @@ export const clips = {
     label: "Lamps on the Bank",
     category: "night",
   },
+  candleRow: {
+    id: "candleRow",
+    video: `${A}/907beed0-1af4-4b6e-a268-46fe93b192bf/candle-row.mp4`,
+    poster: `${A}/e14c1981-ca96-4aad-8a25-16ce19fb2fa1/candle-row.jpg`,
+    label: "A Line of Candles",
+    category: "night",
+  },
+  vratiDawn: {
+    id: "vratiDawn",
+    video: `${A}/639db620-0ef2-4af8-a750-8997f8889856/vrati-dawn.mp4`,
+    poster: `${A}/90123432-c31e-4bc3-bd81-90d65c6906b1/vrati-dawn.jpg`,
+    label: "Waist-deep at Dawn",
+    category: "people",
+  },
 } satisfies Record<string, Clip>;
 
 export const clipList: Clip[] = Object.values(clips);
 
 /** Full-screen ambience that starts once the visitor enters. */
 export const ambientClip = clips.nightAmbient;
+
+/** The backdrop cross-fades through these, so the page never sits still. */
+export const ambientClips: Clip[] = [
+  clips.nightAmbient,
+  clips.candleRow,
+  clips.riverDiyas,
+  clips.droneWater,
+  clips.vratiDawn,
+  clips.sunriseTemple,
+];
 
 export const galleryCategories = [
   { id: "all", label: "All" },
@@ -181,9 +205,11 @@ export const story = [
 ];
 
 // ── Music: streamed live from YouTube ───────────────────────────────────
-export type Track = { id: string; title: string; artist: string; cat: string };
+export type Track = { id: string; title: string; artist: string; cat: string; hit?: boolean };
 
 export const musicCategories = [
+  { id: "all", label: "All" },
+  { id: "hit", label: "Goosebumps" },
   { id: "legend", label: "Sharda Sinha" },
   { id: "arghya", label: "Arghya" },
   { id: "folk", label: "Folk" },
@@ -191,20 +217,26 @@ export const musicCategories = [
 ];
 
 export const tracks: Track[] = [
-  { id: "DG8F-csoRAQ", title: "Pahile Pahil Chhathi Maiya", artist: "Sharda Sinha", cat: "legend" },
-  { id: "knZ8b5YnQiY", title: "Kelwa Ke Paat Par", artist: "Sharda Sinha", cat: "legend" },
-  { id: "fOVGz9WFymU", title: "Ho Deenanath", artist: "Sharda Sinha", cat: "legend" },
+  { id: "DG8F-csoRAQ", hit: true, title: "Pahile Pahil Chhathi Maiya", artist: "Sharda Sinha", cat: "legend" },
+  { id: "knZ8b5YnQiY", hit: true, title: "Kelwa Ke Paat Par", artist: "Sharda Sinha", cat: "legend" },
+  { id: "fOVGz9WFymU", hit: true, title: "Ho Deenanath", artist: "Sharda Sinha", cat: "legend" },
   { id: "gh6cssL0dr8", title: "Best of Sharda Sinha (Jukebox)", artist: "Sharda Sinha", cat: "legend" },
-  { id: "j9G3caThH98", title: "Uthau Suruj Bhaile Bihaan", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "j9G3caThH98", hit: true, title: "Uthau Suruj Bhaile Bihaan", artist: "Sharda Sinha", cat: "arghya" },
   { id: "6DePUrUWtmE", title: "Chhathi Maiya — Full Jukebox", artist: "Sharda Sinha", cat: "arghya" },
   { id: "vSMnJ9BFtLE", title: "Suna Chhathi Maiya", artist: "Anuradha Paudwal", cat: "arghya" },
   { id: "0v0PW0AsCiE", title: "Marbo Re Sugwa Dhanukh Se", artist: "Sharda Sinha", cat: "folk" },
   { id: "9Q9c8bUtWSA", title: "Chhath Geet — Traditional", artist: "Vinod Rathod", cat: "folk" },
   { id: "8BfbY0vb7Ro", title: "Aahe Aaditmal", artist: "Pandey Sisters", cat: "folk" },
-  { id: "FPDKM5NidYM", title: "Kawana Kalamwa Se Likhla Karamwa", artist: "Pawan Singh", cat: "new" },
-  { id: "tnARZzZ4oE0", title: "Koshiya Bharaye Lagal", artist: "Neelkamal Singh", cat: "new" },
+  { id: "FPDKM5NidYM", hit: true, title: "Kawana Kalamwa Se Likhla Karamwa", artist: "Pawan Singh", cat: "new" },
+  { id: "tnARZzZ4oE0", hit: true, title: "Koshiya Bharaye Lagal", artist: "Neelkamal Singh", cat: "new" },
   { id: "8ZmAqvJmXhs", title: "Chhathi Maiya Aaili Anganwa", artist: "Khesari Lal Yadav", cat: "new" },
   { id: "5ZUCVGKlxD0", title: "Bahangi Lachkat Jaye", artist: "Kalpana Patowary", cat: "new" },
+  { id: "8yGZfM_o3rE", title: "Chhathi Maiya Ke Mahima", artist: "Sharda Sinha", cat: "legend" },
+  { id: "9r4vGZ1CmzI", title: "Daura Ghat Par Pahunchai", artist: "Sharda Sinha", cat: "arghya" },
+  { id: "0kEPTHY7WjE", title: "Sooraj Ke Rathwa", artist: "Anuradha Paudwal", cat: "arghya" },
+  { id: "Bd_1v6b9VJk", title: "Rojahi Rojahi Ugelan Suruj Dev", artist: "Traditional", cat: "folk" },
+  { id: "1FIpvpXjXNw", title: "Chhath Ke Barat", artist: "Maithili Thakur", cat: "new" },
+  { id: "cw3fY6q7Sxg", title: "Kelwa Je Fadela", artist: "Maithili Thakur", cat: "folk" },
 ];
 
 export const GITHUB_URL = "https://github.com/avi4748sinha";

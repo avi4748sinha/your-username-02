@@ -40,6 +40,7 @@ export function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const [cat, setCat] = useState(musicCategories[0]!.id);
   const [open, setOpen] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
   const { entered, setDucked } = useAmbience();
   const current: Track | undefined = tracks[idx];
 
@@ -64,7 +65,7 @@ export function MusicPlayer() {
           onReady: () => setReady(true),
           onStateChange: (e: any) => {
             setPlaying(e.data === YT.PlayerState.PLAYING);
-            if (e.data === YT.PlayerState.ENDED) setIdx((p) => (p + 1) % tracks.length);
+            if (e.data === YT.PlayerState.ENDED) setIdx((p) => nextIndex.current(p, 1));
           },
         },
       });
@@ -73,6 +74,14 @@ export function MusicPlayer() {
       cancelled = true;
     };
   }, []);
+
+  // start the playlist the moment the visitor enters
+  useEffect(() => {
+    if (!entered || !ready || !player.current) return;
+    player.current.unMute?.();
+    player.current.setVolume?.(100);
+    player.current.playVideo?.();
+  }, [entered, ready]);
 
   const first = useRef(true);
   useEffect(() => {
@@ -96,6 +105,17 @@ export function MusicPlayer() {
     return () => clearInterval(t);
   }, []);
 
+  /** Kept in a ref so the YouTube callback always sees the current shuffle mode. */
+  const nextIndex = useRef((p: number, d: number) => (p + d + tracks.length) % tracks.length);
+  useEffect(() => {
+    nextIndex.current = (p, d) => {
+      if (!shuffle) return (p + d + tracks.length) % tracks.length;
+      let n = p;
+      while (n === p && tracks.length > 1) n = Math.floor(Math.random() * tracks.length);
+      return n;
+    };
+  }, [shuffle]);
+
   const toggle = () => {
     const p = player.current;
     if (!p) return;
@@ -105,8 +125,9 @@ export function MusicPlayer() {
     else p.playVideo();
   };
 
-  const step = (d: number) => setIdx((p) => (p + d + tracks.length) % tracks.length);
-  const list = tracks.filter((t) => t.cat === cat);
+  const step = (d: number) => setIdx((p) => nextIndex.current(p, d));
+  const list =
+    cat === "all" ? tracks : cat === "hit" ? tracks.filter((t) => t.hit) : tracks.filter((t) => t.cat === cat);
 
   return (
     <motion.div
@@ -148,6 +169,14 @@ export function MusicPlayer() {
             </button>
             <button onClick={() => step(1)} aria-label="Next" className="h-9 w-6 text-cream/50">
               ⏭
+            </button>
+            <button
+              onClick={() => setShuffle((v) => !v)}
+              aria-label="Shuffle"
+              aria-pressed={shuffle}
+              className={`h-9 w-6 ${shuffle ? "text-tide" : "text-cream/50"}`}
+            >
+              ⇄
             </button>
             <button onClick={() => setOpen((o) => !o)} aria-label="Toggle playlist" className="h-9 w-6 text-cream/50">
               {open ? "✕" : "☰"}
