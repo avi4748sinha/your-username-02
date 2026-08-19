@@ -31,7 +31,7 @@ export function AmbientBackdrop() {
         playsInline
         preload="auto"
         disablePictureInPicture
-        className="h-full w-full scale-110 object-cover cool"
+        className="h-full w-full origin-bottom scale-150 object-cover cool"
         style={{ opacity: entered ? 0.42 : 0.16, transition: "opacity 2.4s ease" }}
       />
       {/* blue night wash + depth */}
