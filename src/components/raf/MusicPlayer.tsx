@@ -163,8 +163,32 @@ export function MusicPlayer() {
           <div className="min-w-0">
             <p className="truncate font-ui text-[13px] font-medium leading-tight text-cream">{current?.title}</p>
             <p className="truncate font-ui text-[11px] text-cream/40">{current?.artist}</p>
-            <div className="mt-1.5 h-[2px] w-full overflow-hidden rounded-full bg-cream/10">
-              <div className="h-full rounded-full bg-tide transition-[width] duration-500" style={{ width: `${progress}%` }} />
+            <div className="relative mt-1.5 flex items-center gap-2">
+              <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-cream/10">
+                <div className="h-full rounded-full rgb-line" style={{ width: `${progress}%` }} />
+              </div>
+              <span className="shrink-0 font-ui text-[9px] tabular-nums text-cream/35">
+                {fmt(time.cur)} / {fmt(time.dur)}
+              </span>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                step={0.1}
+                value={progress}
+                aria-label="Seek"
+                onPointerDown={() => setScrubbing(true)}
+                onChange={(e) => setProgress(Number(e.target.value))}
+                onPointerUp={(e) => {
+                  seekTo(Number((e.target as HTMLInputElement).value));
+                  setScrubbing(false);
+                }}
+                onKeyUp={(e) => {
+                  seekTo(Number((e.target as HTMLInputElement).value));
+                  setScrubbing(false);
+                }}
+                className="absolute inset-x-0 -top-2 h-6 w-full cursor-pointer opacity-0"
+              />
             </div>
           </div>
 
