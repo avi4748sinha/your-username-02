@@ -25,15 +25,9 @@ export function Countdown() {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="mx-auto max-w-md rounded-2xl p-6 card-night"
       >
-        <div className="flex items-center justify-between">
-          <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-tide">Next ritual</p>
-          <span className="font-ui text-[10px] tabular-nums text-cream/35">
-            {next.date.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" })} IST
-          </span>
-        </div>
+        <p className="font-ui text-[10px] uppercase tracking-[0.4em] text-tide">Next ritual</p>
 
         <h2 className="mt-3 font-display text-4xl text-cream">{next.name}</h2>
-        <p className="font-hindi text-sm text-cream/40">{next.native}</p>
 
         <div className="mt-6 grid grid-cols-4 gap-2 rounded-xl border border-cream/10 bg-midnight/40 py-4">
           <Cell v={r?.d ?? 0} label="Days" />
