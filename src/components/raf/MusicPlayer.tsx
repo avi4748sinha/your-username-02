@@ -83,13 +83,7 @@ export function MusicPlayer() {
     };
   }, []);
 
-  // start the playlist the moment the visitor enters
-  useEffect(() => {
-    if (!entered || !ready || !player.current) return;
-    player.current.unMute?.();
-    player.current.setVolume?.(100);
-    player.current.playVideo?.();
-  }, [entered, ready]);
+  // songs never autostart — the opening film owns the sound until you press play
 
   const first = useRef(true);
   useEffect(() => {
