@@ -100,12 +100,22 @@ export function MusicPlayer() {
   useEffect(() => {
     const t = setInterval(() => {
       const p = player.current;
-      if (!p?.getDuration) return;
+      if (!p?.getDuration || scrubbing) return;
       const d = p.getDuration();
-      setProgress(d ? (p.getCurrentTime() / d) * 100 : 0);
-    }, 500);
+      const c = p.getCurrentTime();
+      setTime({ cur: c, dur: d });
+      setProgress(d ? (c / d) * 100 : 0);
+    }, 400);
     return () => clearInterval(t);
-  }, []);
+  }, [scrubbing]);
+
+  const seekTo = (pct: number) => {
+    const p = player.current;
+    const d = time.dur || p?.getDuration?.() || 0;
+    if (!p?.seekTo || !d) return;
+    p.seekTo((pct / 100) * d, true);
+    setProgress(pct);
+  };
 
   /** Kept in a ref so the YouTube callback always sees the current shuffle mode. */
   const nextIndex = useRef((p: number, d: number) => (p + d + tracks.length) % tracks.length);
