@@ -10,6 +10,12 @@ declare global {
   }
 }
 
+const fmt = (s: number) => {
+  if (!Number.isFinite(s) || s <= 0) return "0:00";
+  const m = Math.floor(s / 60);
+  return `${m}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+};
+
 let apiPromise: Promise<any> | null = null;
 function loadYT(): Promise<any> {
   if (apiPromise) return apiPromise;
