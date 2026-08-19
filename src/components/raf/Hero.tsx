@@ -1,45 +1,82 @@
 import { motion } from "motion/react";
 import { clips } from "@/data/rafiganj";
 import { CinemaVideo } from "./CinemaVideo";
+import { useAmbience } from "@/lib/ambience";
+
+const line = {
+  hidden: { opacity: 0, y: 16, filter: "blur(10px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
 
 export function Hero() {
+  const { entered } = useAmbience();
+
   return (
-    <section className="relative min-h-[100svh] w-full overflow-hidden bg-midnight grain vignette">
+    <section className="relative flex min-h-[100svh] w-full flex-col justify-end overflow-hidden pb-20">
       <motion.div
-        className="absolute inset-0 vintage"
-        initial={{ opacity: 0, filter: "blur(14px)" }}
-        animate={{ opacity: 0.6 }}
-        transition={{ duration: 2.6, ease: "easeOut" }}
+        className="absolute inset-0 cool"
+        initial={{ opacity: 0, scale: 1.12 }}
+        animate={{ opacity: entered ? 0.75 : 0, scale: 1 }}
+        transition={{ duration: 3, ease: "easeOut" }}
       >
         <CinemaVideo src={clips.droneGhat.video} poster={clips.droneGhat.poster} eager />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-b from-midnight/80 via-midnight/40 to-midnight" />
+      <div className="absolute inset-0 bg-gradient-to-b from-midnight/70 via-midnight/25 to-midnight" />
 
-      <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+      <motion.div
+        initial="hidden"
+        animate={entered ? "show" : "hidden"}
+        transition={{ staggerChildren: 0.22, delayChildren: 0.4 }}
+        className="relative z-10 px-6"
+      >
+        <motion.p
+          variants={line}
+          transition={{ duration: 1 }}
+          className="font-ui text-[10px] uppercase tracking-[0.5em] text-tide"
         >
-          <p className="font-ui text-[11px] uppercase tracking-[0.55em] text-gold/70">Est. Rafiganj · Bihar</p>
+          Rafiganj Ghat · Bihar
+        </motion.p>
 
-          <div className="mx-auto mt-6 w-full max-w-sm border-y border-gold/25 py-6">
-            <h1 className="font-display text-5xl leading-none text-cream sm:text-7xl">Chhath Puja</h1>
-            <p className="mt-2 font-display text-6xl leading-none text-gold-gradient sm:text-8xl">2026</p>
-          </div>
+        <motion.h1
+          variants={line}
+          transition={{ duration: 1.1 }}
+          className="mt-4 font-display text-[3.4rem] leading-[0.88] text-ice-gradient sm:text-7xl"
+        >
+          Chhath
+          <br />
+          Puja <span className="italic">2026</span>
+        </motion.h1>
 
-          <p className="mt-6 font-ui text-lg italic text-cream/70">Four days. One river bend.</p>
-          <p className="mt-1 font-hindi text-base text-cream/45">जय छठी मैया</p>
+        <motion.div variants={line} transition={{ duration: 1 }} className="mt-6 flex items-center gap-4">
+          <span className="h-px w-12 bg-cream/25" />
+          <p className="font-ui text-sm text-cream/60">Four days. One river bend.</p>
         </motion.div>
 
-        <motion.span
-          animate={{ y: [0, 7, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity }}
-          className="absolute bottom-24 text-cream/40"
+        <motion.div
+          variants={line}
+          transition={{ duration: 1 }}
+          className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-cream/10 bg-cream/5 text-center"
         >
-          ↓
-        </motion.span>
-      </div>
+          {[
+            ["13—16", "November"],
+            ["05:05", "Pratah IST"],
+            ["36 hrs", "Of fasting"],
+          ].map(([a, b]) => (
+            <div key={b} className="bg-midnight/60 px-2 py-3 backdrop-blur-xl">
+              <p className="font-display text-xl text-cream">{a}</p>
+              <p className="mt-0.5 font-ui text-[9px] uppercase tracking-[0.2em] text-cream/40">{b}</p>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <motion.span
+        animate={{ y: [0, 8, 0], opacity: [0.3, 0.7, 0.3] }}
+        transition={{ duration: 2.6, repeat: Infinity }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 font-ui text-[10px] tracking-[0.4em] text-cream/40"
+      >
+        SCROLL
+      </motion.span>
     </section>
   );
 }
