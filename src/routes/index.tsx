@@ -1,4 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AmbienceProvider } from "@/lib/ambience";
+import { AmbientBackdrop } from "@/components/raf/AmbientBackdrop";
+import { EntryGate } from "@/components/raf/EntryGate";
+import { TopBar } from "@/components/raf/TopBar";
 import { Hero } from "@/components/raf/Hero";
 import { Countdown } from "@/components/raf/Countdown";
 import { CinematicStory } from "@/components/raf/CinematicStory";
@@ -14,7 +18,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A short vintage record of Chhath Puja in Rafiganj, Bihar — real ghat footage, the four-day calendar, and a live countdown to each Arghya.",
+          "A cinematic night record of Chhath Puja in Rafiganj, Bihar — real ghat footage, the four-day calendar, a live countdown to each Arghya and a Chhath music player.",
       },
       { property: "og:title", content: "Chhath Puja 2026 — Rafiganj, Bihar" },
       {
@@ -23,7 +27,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#141019" },
+      { name: "theme-color", content: "#0b1020" },
     ],
   }),
   component: Index,
@@ -31,21 +35,19 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main className="relative min-h-screen bg-midnight text-cream">
-      <div
-        className="pointer-events-none fixed inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(180deg, oklch(0.15 0.028 40) 0%, oklch(0.2 0.045 45) 45%, oklch(0.16 0.035 40) 75%, oklch(0.26 0.06 55) 100%)",
-        }}
-      />
-      <Hero />
-      <Countdown />
-      <CinematicStory />
-      <ChhathTimeline />
-      <VideoGallery />
-      <FinalSunrise />
-      <MusicPlayer />
-    </main>
+    <AmbienceProvider>
+      <AmbientBackdrop />
+      <EntryGate />
+      <TopBar />
+      <main className="relative min-h-screen text-cream">
+        <Hero />
+        <Countdown />
+        <CinematicStory />
+        <ChhathTimeline />
+        <VideoGallery />
+        <FinalSunrise />
+        <MusicPlayer />
+      </main>
+    </AmbienceProvider>
   );
 }
